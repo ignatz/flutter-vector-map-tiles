@@ -75,7 +75,9 @@ class _VectorTileCompositeLayerState extends State<VectorTileCompositeLayer>
   @override
   void initState() {
     super.initState();
-    _executor = newExecutor(concurrency: widget.options.concurrency);
+    _executor = widget.options.concurrency == 0
+        ? ImmediateExecutor()
+        : newExecutor(concurrency: widget.options.concurrency);
     _createCaches();
     Future.delayed(const Duration(seconds: 3), () {
       _caches.applyConstraints();

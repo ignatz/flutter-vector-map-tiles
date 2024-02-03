@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:vector_tile_renderer/vector_tile_renderer.dart' hide TileLayer;
 // ignore: uri_does_not_exist
-import 'api_key.dart';
+// import 'api_key.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,10 +86,16 @@ class _MyHomePageState extends State<MyHomePage> {
 //   Mapbox - mapbox://styles/mapbox/streets-v12?access_token={key}
 //   Maptiler - https://api.maptiler.com/maps/outdoor/style.json?key={key}
 //   Stadia Maps - https://tiles.stadiamaps.com/styles/outdoors.json?api_key={key}
+  // Future<Style> _readStyle() => StyleReader(
+  //         uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
+  //         // ignore: undefined_identifier
+  //         apiKey: mapboxApiKey,
+  //         logger: const Logger.console())
+  //     .read();
   Future<Style> _readStyle() => StyleReader(
-          uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
-          // ignore: undefined_identifier
-          apiKey: mapboxApiKey,
+          uri:
+              'https://openhistoricalmap.github.io/map-styles/ohm_timeslider_tegola/tegola-ohm.json',
+          //uri: 'https://raw.githubusercontent.com/OpenHistoricalMap/map-styles/staging/woodblock/woodblock.json',
           logger: const Logger.console())
       .read();
 
@@ -102,12 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
             backgroundColor: material.Theme.of(context).canvasColor),
         children: [
           VectorTileLayer(
-              tileProviders: style.providers,
-              theme: style.theme,
-              sprites: style.sprites,
-              maximumZoom: 22,
-              tileOffset: TileOffset.mapbox,
-              layerMode: VectorTileLayerMode.vector)
+            concurrency: 0,
+            tileProviders: style.providers,
+            theme: style.theme,
+            sprites: style.sprites,
+            maximumZoom: 22,
+            tileOffset: TileOffset.mapbox,
+            layerMode: VectorTileLayerMode.vector,
+          )
         ],
       );
 

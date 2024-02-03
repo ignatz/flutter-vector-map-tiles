@@ -30,7 +30,7 @@ class _Request {
 FutureOr<Tile> _processTile(_Request request) {
   var tileData = request.tileData;
   if (request.clip != null) {
-    final clipper = TileClip(bounds: request.clip!);
+    final clipper = TileClip(bounds: ClipArea.fromRectangle(request.clip!));
     tileData = clipper.clip(tileData);
   }
   return tileData.toTile();
